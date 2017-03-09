@@ -1,0 +1,32 @@
+﻿@model DayMaps.Models.Task
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="tableDiv"></div>
+
+<div id="taskCreateForm">
+    @using (Ajax.BeginForm("AJAXCreate", "Tasks", new AjaxOptions
+    {
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "POST",
+        UpdateTargetId = "tableDiv"
+    }))
+    {
+        <div class="form-group">
+            @Html.AntiForgeryToken()
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+</div>
+
+ @section Scripts{
+     <scripts src="~/Scripts/jquery.unobtrusive-ajax.min.js"></scripts>
+     <scripts src="~/CustomScripts/BuildTable.js"></scripts>
+     @Scripts.Render("~/bundles/jqueryval")
+     }
